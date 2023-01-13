@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mealapp/categories_meals_screen.dart';
 import 'package:mealapp/categories_screen.dart';
 
 void main() {
@@ -32,7 +33,12 @@ class MyApp extends StatelessWidget {
         canvasColor: const Color.fromARGB(255, 238, 230, 240),
         fontFamily: 'Raleway',
       ),
-      home: const CategoriesScreen(),
+      // home: const CategoriesScreen(),
+      initialRoute: "/",
+      routes: {
+        '/': (ctx) => const CategoriesScreen(),
+        CategoriesMealsScreen.routeName: (ctx) => CategoriesMealsScreen(),
+      },
     );
   }
 }
