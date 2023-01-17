@@ -28,11 +28,13 @@ class MealItem extends StatelessWidget {
         child: Column(
           children: [
             Stack(
+              //todo still to add title on image
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15)),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
                   child: Image.network(
                     imageUrl,
                     height: 250,
