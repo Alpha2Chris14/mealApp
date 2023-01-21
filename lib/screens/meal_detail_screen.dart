@@ -24,7 +24,7 @@ class MealDetailScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             alignment: Alignment.topCenter,
-            fit: BoxFit.contain,
+            fit: BoxFit.fitWidth,
             image: NetworkImage(
               selectedMeal.imageUrl,
             ),
@@ -77,6 +77,27 @@ class MealDetailScreen extends StatelessWidget {
                     );
                   },
                   itemCount: selectedMeal.ingredients.length,
+                ),
+              ),
+              Container(
+                height: 200,
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Text(
+                          "${index + 1} . ${selectedMeal.steps}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        )
+                      ],
+                    );
+                  },
+                  itemCount: selectedMeal.steps.length,
                 ),
               )
             ],
