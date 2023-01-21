@@ -131,7 +131,7 @@ class MealItem extends StatelessWidget {
                         const SizedBox(
                           width: 6,
                         ),
-                        Text("$affordabilityText min"),
+                        Text(affordabilityText),
                       ],
                     ),
                   ],
