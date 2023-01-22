@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mealapp/widgets/drawer_item.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -31,6 +32,17 @@ class MainDrawer extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          DrawerItem(
+            "Meals",
+            Icons.restaurant,
+          ),
+          DrawerItem(
+            "Settings",
+            Icons.settings,
+          )
         ],
       ),
     );
