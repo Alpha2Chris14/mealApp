@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mealapp/screens/filters_screen.dart';
+import 'package:mealapp/screens/tab_screen.dart';
 import 'package:mealapp/widgets/drawer_item.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -38,11 +40,13 @@ class MainDrawer extends StatelessWidget {
           DrawerItem(
             "Meals",
             Icons.restaurant,
+            () {
+              Navigator.of(context).pushReplacementNamed("/");
+            },
           ),
-          DrawerItem(
-            "Settings",
-            Icons.settings,
-          )
+          DrawerItem("Settings", Icons.settings, () {
+            Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
+          })
         ],
       ),
     );

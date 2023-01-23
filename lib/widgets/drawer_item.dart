@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class DrawerItem extends StatelessWidget {
   final String title;
   IconData iconStyle;
-  DrawerItem(this.title, this.iconStyle);
+  Function tapHandler;
+  DrawerItem(this.title, this.iconStyle, this.tapHandler);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class DrawerItem extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: null,
+      onTap: () => tapHandler(),
     );
   }
 }
