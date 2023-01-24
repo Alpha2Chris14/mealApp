@@ -51,6 +51,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
       });
     }
 
+    void _changeIsVegan(value) {
+      setState(() {
+        _vegan = value;
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -85,6 +91,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 "Only include vegetarian meals",
                 _vegetarian,
                 _changeIsVegetarian,
+              ),
+              _switchTiles(
+                "Vegan",
+                "Only include vegan meals",
+                _vegan,
+                _changeIsVegan,
               ),
             ],
           ))
