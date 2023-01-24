@@ -1,24 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:mealapp/widgets/meal_item.dart';
 import '../dummy_data.dart';
+import '../models/meal.dart';
 
-class CategoriesMealsScreen extends StatelessWidget {
+class CategoriesMealsScreen extends StatefulWidget {
   static const routeName = '/category-meals';
-  // final String categoryId;
-  // final String categoryTitle;
-
-  // const CategoriesMealsScreen(this.categoryId, this.categoryTitle, {super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+  State<CategoriesMealsScreen> createState() => _CategoriesMealsScreenState();
+}
 
-    final categoryId = routeArgs['id'];
-    final categoryTitle = routeArgs['title'];
-    final categoryMeals = DUMMY_MEALS.where((meal) {
-      return meal.categories.contains(categoryId);
-    }).toList();
+class _CategoriesMealsScreenState extends State<CategoriesMealsScreen> {
+  String categoryTitle = "";
+  List<Meal> displayedMeals = [];
+  bool _loadedInitData = false;
+
+  @override
+  void didChangeDependencies() {
+    if (!_loadedInitData) {
+      final routeArgs =
+          ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+
+      final categoryId = routeArgs['id'];
+      categoryTitle = routeArgs['title'] as String;
+      displayedMeals = DUMMY_MEALS.where((meal) {
+        return meal.categories.contains(categoryId);
+      }).toList();
+      _loadedInitData = true;
+    }
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  void _removeMeal(String mealId) {
+    setState(() {
+      displayedMeals.removeWhere((element) => element.id == mealId);
+    });
+  }
+
+  // final String categoryId;
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(categoryTitle as String),
@@ -26,15 +48,16 @@ class CategoriesMealsScreen extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (context, index) {
           return MealItem(
-            id: categoryMeals[index].id,
-            title: categoryMeals[index].title,
-            imageUrl: categoryMeals[index].imageUrl,
-            affordability: categoryMeals[index].affordability,
-            complexity: categoryMeals[index].complexity,
-            duration: categoryMeals[index].duration,
+            id: displayedMeals[index].id,
+            title: displayedMeals[index].title,
+            imageUrl: displayedMeals[index].imageUrl,
+            affordability: displayedMeals[index].affordability,
+            complexity: displayedMeals[index].complexity,
+            duration: displayedMeals[index].duration,
+            deleteItem: _removeMeal,
           );
         },
-        itemCount: categoryMeals.length,
+        itemCount: displayedMeals.length,
       ),
     );
   }

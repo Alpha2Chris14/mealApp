@@ -18,7 +18,17 @@ class MealDetailScreen extends StatelessWidget {
     // print(url);
 
     return Scaffold(
-      appBar: AppBar(title: Text(selectedMeal.title)),
+      appBar: AppBar(
+        title: Text(selectedMeal.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pop(mealId);
+            },
+            icon: const Icon(Icons.delete_outline),
+          ),
+        ],
+      ),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(

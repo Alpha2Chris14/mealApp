@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => const TabScreen(),
         CategoriesMealsScreen.routeName: (ctx) => CategoriesMealsScreen(),
-        MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
-        FiltersScreen.routeName: (ctx) => FiltersScreen(),
+        MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
+        FiltersScreen.routeName: (ctx) => const FiltersScreen(),
       },
       //a fallback page
       onGenerateRoute: (settings) {
