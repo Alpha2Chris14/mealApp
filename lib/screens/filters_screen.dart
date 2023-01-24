@@ -39,6 +39,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
       });
     }
 
+    void _changeIsLactoseFree(value) {
+      setState(() {
+        _lactoseFree = value;
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -62,6 +68,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 _gluteenFree,
                 _changeIsGluttenFree,
               ),
+              _switchTiles("Lactose-Free", "Only include lactose-free meals",
+                  _lactoseFree, _changeIsLactoseFree)
             ],
           ))
         ],
