@@ -1,18 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:mealapp/dummy_data.dart';
 import 'package:mealapp/screens/categories_meals_screen.dart';
 import 'package:mealapp/screens/filters_screen.dart';
 import 'package:mealapp/screens/meal_detail_screen.dart';
 import 'package:mealapp/screens/tab_screen.dart';
 
+import 'models/meal.dart';
+
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Map<String, bool> _filters = {
+    "gluten": false,
+    "lactose": false,
+    "vegan": false,
+    "vegetarian": false,
+  };
+
+  List<Meal> _availableMeals = DUMMY_MEALS;
+  void _setFilters(Map<String, bool> filterData) {
+    setState(() {
+      _filters = filterData;
+
+      _availableMeals = DUMMY_MEALS.where((element) {
+        if (_filters["gluten"] == true && !element.isGlutenFree) {
+          return false;
+        }
+        if (_filters["lactose"] == true && !element.isLactoseFree) {
+          return false;
+        }
+
+        if (_filters["vegan"] == true && !element.isVegan) {
+          return false;
+        }
+
+        if (_filters["vegetarian"] == true && !element.isVegetarian) {
+          return false;
+        }
+        return true;
+      }).toList();
+    });
+  }
+
   //just did a code review
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,18 +84,21 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         '/': (ctx) => const TabScreen(),
-        CategoriesMealsScreen.routeName: (ctx) => CategoriesMealsScreen(),
+        CategoriesMealsScreen.routeName: (ctx) =>
+            CategoriesMealsScreen(_availableMeals),
         MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
-        FiltersScreen.routeName: (ctx) => const FiltersScreen(),
+        FiltersScreen.routeName: (ctx) => FiltersScreen(_setFilters, _filters),
       },
       //a fallback page
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(builder: (ctx) => CategoriesMealsScreen());
+        return MaterialPageRoute(
+            builder: (ctx) => CategoriesMealsScreen(_availableMeals));
       },
 
       //a like 404 page
       onUnknownRoute: (settings) {
-        return MaterialPageRoute(builder: (ctx) => CategoriesMealsScreen());
+        return MaterialPageRoute(
+            builder: (ctx) => CategoriesMealsScreen(_availableMeals));
       },
     );
   }
