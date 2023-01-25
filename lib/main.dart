@@ -52,7 +52,24 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void _toggleFavourite(String mealId) {}
+  void _toggleFavourite(String mealId) {
+    final existingIndex =
+        _favoriteMeals.indexWhere((element) => element.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteMeals
+            .add(DUMMY_MEALS.firstWhere((element) => element.id == mealId));
+      });
+    }
+  }
+
+  bool _isMealFavourite(String id) {
+    return _favoriteMeals.any((element) => element.id == id);
+  }
 
   //just did a code review
   @override
@@ -89,7 +106,8 @@ class _MyAppState extends State<MyApp> {
         '/': (ctx) => TabScreen(_favoriteMeals),
         CategoriesMealsScreen.routeName: (ctx) =>
             CategoriesMealsScreen(_availableMeals),
-        MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
+        MealDetailScreen.routeName: (ctx) =>
+            MealDetailScreen(_toggleFavourite, _isMealFavourite),
         FiltersScreen.routeName: (ctx) => FiltersScreen(_setFilters, _filters),
       },
       //a fallback page
