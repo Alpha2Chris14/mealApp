@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeals = [];
   void _setFilters(Map<String, bool> filterData) {
     setState(() {
       _filters = filterData;
@@ -50,6 +51,8 @@ class _MyAppState extends State<MyApp> {
       }).toList();
     });
   }
+
+  void _toggleFavourite(String mealId) {}
 
   //just did a code review
   @override
@@ -83,7 +86,7 @@ class _MyAppState extends State<MyApp> {
       // home: const CategoriesScreen(),
       initialRoute: "/",
       routes: {
-        '/': (ctx) => const TabScreen(),
+        '/': (ctx) => TabScreen(_favoriteMeals),
         CategoriesMealsScreen.routeName: (ctx) =>
             CategoriesMealsScreen(_availableMeals),
         MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
